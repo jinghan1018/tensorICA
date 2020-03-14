@@ -1,0 +1,2 @@
+# tensorICA
+R package tensorICA
