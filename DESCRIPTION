@@ -1,0 +1,19 @@
+Package: tensorICA
+Title: tensorICA
+Version: 1.0.0
+Description: The **tensorICA** package contains several utility functions for decomposing multi-omic tensor-valued data implementing two tensorial ICA methods, JADE and FOBI, and functions for visualizing the components against phenotype to help with feature selection.
+Date: 2019-6-20
+Author: Andrew E. Teschendorff <a.teschendorff@ucl.ac.uk>, Han Jing <jinghan@picb.ac.cn>
+Maintainer: Han Jing <jinghan@picb.ac.cn>
+Depends: R (>= 3.6)
+Imports: tensorBSS, isva, ggplot2, cowplot, tidyr, dplyr, stats
+Suggests: roxygen2, GEOquery, BiocStyle, knitr, rmarkdown, Biobase, testthat, utils
+VignetteBuilder: utils
+License: GPL-2
+LazyData: true
+NeedsCompilation: no
+RoxygenNote: 7.1.0
+URL: 
+biocViews: DNAMethylation, MethylationArray, Epigenetics,
+        DifferentialMethylation
+Packaged: 

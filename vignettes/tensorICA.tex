@@ -1,0 +1,41 @@
+\documentclass{article}
+
+% \VignetteEngine{utils::Sweave}
+% \VignetteIndexEntry{tensorICA}
+
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[tableposition=top]{caption}
+\usepackage{ifthen}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage[margin=1in,footskip=0.25in]{geometry}
+\usepackage{Sweave}
+\begin{document}
+\input{tensorICA-concordance}
+\title{tensorICA - Tensorial Independent Component Analysis for tensor-valued multi-omic data - R package}
+\author{Han Jing, Andrew E. Teschendorff, Joni Virta
+    \\
+    \href{mailto:jinghan@picb.ac.cn}{jinghan@picb.ac.cn}
+    \\
+    \href{mailto:andrew@picb.ac.cn}{andrew@picb.ac.cn}
+    \\
+    \href{mailto:joni.virta@aalto.fi}{joni.virta@aalto.fi}}
+\maketitle   
+
+\tableofcontents
+
+\section*{1. Introduction}
+This is a demo for using the \verb@tensorICA@ package in R. The \verb@tensorICA@ package is designed for fast decomposition analysis of tensor-valued multi-omic data. It contains several functions for decomposing multi-omic tensor-valued data implementing two tensorial ICA methods and several utility functions for visualizing the relationship between component against phenotype to help with feature selection. Tensorial ICA aims to infer from a data-tensor, statistically independent sources of data variation, which should better correspond to underlying biological factors. Indeed, since biological sources of data variation are generally non-Gaussian and often sparse, the statistical independence assumption implicit in the ICA formalism can help improve the deconvolution of complex mixtures and thus better identify the true sources of data variation. In the package, we here include two tensorial methods call JADE and FOBI, which are the abbreviation of tensorial joint approximate diagonalization of high-order eigenmatrices and tensorial fourth-order blind identication, respectively. These two methods have been elaborated in \verb@tensorBSS@ package.
+\section*{2. Get started with tensorICA package}
+Tensorial ICA works by decomposing a data tensor into a source tensor and mixing matrices. The key property of tICA is that the independent components in source tensor are as statistically independent from each other as possible. Statistical independence is a stronger criterion than linear decorrelation and allows improved inference of sparse sources of data variation. A prior tensorial PCA is requested as a whitening step to reduce the noise. Positive kurtosis can be used to rank independent components to select the most sparse factors. The largest absolute weights within each independent component can be used for feature selection, while the corresponding component in the mixing matrices informs about the pattern of variation of this component across data types and samples, respectively. 
+\subsection*{2.1 Load tensorICA package and example data}
+We expect the tensorial ICA methods can capture the variation correlated to the phenotype. However, evaluating methods on real data objectively is challenging due to the difficulty of defining a goldstandard set of true positive associations. Fortunately, a meta-analysis of several smoking EWAS in blood has demonstrated that smoking-associated differentially methylated CpGs are highly reproducible, defining a gold-standard set of 62 smoking-associated CpGs. In addition, it has been showed that all 62 smoking-associated CpGs are associated with smoking exposure effectively if DNA methylation is measured in buccal cell. So, here we use a small tensor-valued DNA methylation dataset meatured on blood and buccal tissues as an example dataset to test methods in terms of their ability to identify these 62 smoking-associated CpGs with their corresponding smoking phenotype information. This tensor dataset consists of two matched HumanMethylation450 BeadChip data matrices meatured on blood and buccal. In each tissue layer matrix, the data is defined over the same CpG sites (columns) and the same individuals (rows). Because there are two distinct samples (blood and buccal) per individual, most of the variation is genetic. Hence, to reduce this background genetic variation, the CpG sites contained in the tensor dataset are obtained by combining 500 non-smoking associated CpGs with the 62 smoking associated CpGs. We expect tensorICA can capture the components which correlated to smoking phenotype with large weight on the 62 smoking associated CpGs. 
+\\
+The input example data \verb@buccalbloodtensor@ is stored in the package. We can load it with following commands. 
+\begin{Schunk}
+\begin{Sinput}
+> library(tensorICA);
